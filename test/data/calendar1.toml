@@ -3,6 +3,7 @@
 courseTitle = "Latin 101, section 2, F'22"
 # YYYY-MM-DD
 firstDay = "2022-08-31"
+lastDay = "2022-12-09"
 
 # Pattern of class meetings: "mwf", "tt" or "wf"
 schedule = "mwf"
