@@ -1,0 +1,15 @@
+# Configure a course calendar
+# Used for title of web page
+pageTitle : "Latin 101, F'20: course schedule"
+# YYYY-MM-DD
+firstDay: "2020-09-02"
+
+# Pattern of class meetings: "mwf", "tt" or "wf"
+schedule : "mwf"
+
+# Number of weeks the calendar should run for
+totalWeeks : 14
+
+fixedDates:
+  - 2020-09-30 == No class on Wednesday
+  - 2020-10-09 == All unit 1 requirements due Friday (11:59 pm Eastern)
