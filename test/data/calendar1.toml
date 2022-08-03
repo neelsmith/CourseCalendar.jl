@@ -12,6 +12,10 @@ schedule = "mwf"
 totalWeeks =  14
 
 fixedDates = [
-  ["2020-09-30", "No class on Wednesday"],
-  ["2020-10-09",  "All unit 1 requirements due Friday (11:59 pm Eastern)"]
+  ["2022-08-29", "Advising"],
+  ["2022-10-07",  "Last class before fall break"],
+  ["2022-10-17",  "Classes resume"],
+  ["2022-11-22",  "Last class before Thanksgiving break"],
+  ["2022-11-28",  "Classes resume"],
+  ["2022-12-09",  "Last day of classes"]
 ]
