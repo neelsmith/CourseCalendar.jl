@@ -11,7 +11,6 @@ schedule = "mwf"
 totalWeeks =  14
 
 fixedDates = [
-  
-["2020-09-30", "No class on Wednesday"],
-["2020-10-09",  "All unit 1 requirements due Friday (11:59 pm Eastern)"]
+  ["2020-09-30", "No class on Wednesday"],
+  ["2020-10-09",  "All unit 1 requirements due Friday (11:59 pm Eastern)"]
 ]
