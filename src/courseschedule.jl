@@ -1,3 +1,4 @@
+"""Recognized course meeting patterns."""
 @enum MeetingPattern MWF TTh
 const patternDict = Dict(
     "MWF" => MWF,
@@ -18,6 +19,9 @@ struct CourseSchedule
     end
 end
 
+"""Warn if number of topics is not equal to number of
+implied class meetings.
+"""
 function checkdata(startdate, enddate, meets, topics)
     datable = filter(topics) do t
         ! isempty(t) && ! startswith(t, "#")
@@ -61,6 +65,10 @@ function weeks(sched::CourseSchedule)
     weeks(sched.firstday, sched.lastday, sched.meetson)
 end
 
+
+"""Segment list of class meeting dates into week-long series, based on
+how often the class meets weekly.
+"""
 function weeks(day1,lastday, meetson)
     startfrom = Dates.dayofweek(day1) == Dates.Wed || Dates.dayofweek(day1) == Dates.Thu ?     day1 - Dates.Day(2) : day1
     dr =  startfrom:Day(1):lastday
@@ -82,10 +90,15 @@ function weeks(day1,lastday, meetson)
 end
 
 
+"""Compute number of class meetings."""
 function classcount(sched::CourseSchedule)
     classcount(sched.firstday, sched.lastday, sched.meetson)
 end
 
+
+"""Compute number of class meetings between an inclusive starting and
+ending date, based on weekly class meeting pattern.
+"""
 function classcount(day1, lastday, meetson)
     if meetson == MWF
         3 * length(weeks(day1, lastday, meetson))
@@ -100,7 +113,7 @@ end
 
 """Compose a markdown page with course calendar.
 """
-function mdcalendar(sched::CourseSchedule)
+function mdcalendar(sched::CourseSchedule; header = false)
     topicentries = filter(sched.topics) do t
         ! isempty(t) && ! startswith(t, "#")
     end
@@ -111,7 +124,7 @@ function mdcalendar(sched::CourseSchedule)
 
 
     caldata = filter(ln -> ! isempty(ln), sched.topics)
-    mdlines = ["# Calendar for $(sched.title)", ""]
+    mdlines = header ? ["# Calendar for $(sched.title)", ""] : []
     topicidx = 1
     needheading = true
     for wk in weeks(sched)
