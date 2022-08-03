@@ -19,8 +19,17 @@ struct CourseSchedule
 end
 
 function checkdata(startdate, enddate, meets, topics)
-
+    datable = filter(topics) do t
+        ! isempty(t) && ! startswith(t, "#")
+    end
+    totaldates = classcount(startdate, enddate, meets)
+    if length(datable) != 
+        @warn("Total of $(totaldates) calendar dates on schedule, but $(length(topics)) topics.")
+    end
 end
+
+
+
 """Construct a `CourseSchedule` from a configuration file.
 """
 function courseSchedule(configfile, topicsfile)
@@ -86,4 +95,52 @@ function classcount(day1, lastday, meetson)
         @warn("CourseSchedule not implemented for $(sched.meetson)")
         0
     end
+end
+
+
+"""Compose a markdown page with course calendar.
+"""
+function mdcalendar(sched::CourseSchedule)
+    topicentries = filter(sched.topics) do t
+        ! isempty(t) && ! startswith(t, "#")
+    end
+    totalclasses = classcount(sched)
+    if length(topicentries) > totalclasses
+        throw(DomainError("More topics ($(length(topicentries))) than dates ($(totalclasses))"))
+    end
+
+
+    caldata = filter(ln -> ! isempty(ln), sched.topics)
+    mdlines = ["# Calendar for $(sched.title)", ""]
+    topicidx = 1
+    needheading = true
+    for wk in weeks(sched)
+        @info("Topic idx $(topicidx) ")
+        if topicidx <= length(caldata)
+            while startswith(caldata[topicidx], "#")
+                push!(mdlines, caldata[topicidx])
+                push!(mdlines, "")
+                topicidx = topicidx + 1
+                needheading = true
+            end
+            if needheading
+
+                lbls = map(d -> dayname(d), wk)
+                push!(mdlines, string("| ", join(lbls, " | "), " |"))
+                hdrformat = map(d -> ":---",  wk)
+                push!(mdlines, string("| ", join(hdrformat, " | "), " |"))
+                needheading = false
+            end
+            if length(caldata[topicidx:end]) >= length(wk)
+                cells = []
+                for i in 1:length(wk)
+                    push!(cells, caldata[topicidx])
+                    topicidx = topicidx + 1
+                end
+                push!(mdlines, string("| ", join(cells," | "), " |"))
+            end
+        end
+    end
+
+    join(mdlines, "\n")
 end

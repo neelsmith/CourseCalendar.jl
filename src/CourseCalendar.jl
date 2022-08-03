@@ -4,7 +4,7 @@ using Dates
 using TOML
 
 export CourseSchedule, courseSchedule
-
+export mdcalendar
 
 
 include("courseschedule.jl")
