@@ -1,6 +1,6 @@
 # Configure a course calendar
 # Used for title of web page
-pageTitle = "Latin 101, F'22: course schedule"
+courseTitle = "Latin 101, section 2, F'22"
 # YYYY-MM-DD
 firstDay = "2022-08-31"
 

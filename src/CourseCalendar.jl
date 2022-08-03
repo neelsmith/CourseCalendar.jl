@@ -1,5 +1,11 @@
 module CourseCalendar
+using Dates
+using TOML
 
-greet() = print("Hello World!")
+export CourseSchedule, courseSchedule
+
+
+
+include("courseschedule.jl")
 
 end # module
