@@ -113,7 +113,7 @@ function notesforweek(wk,sch::CourseSchedule)
         evt.evt_day in wkrange
     end
     map(matchingevts) do evt
-        string("**", dayabbr(evt.evt_day), ".**: *", evt.evt_label, "*")
+        string("**", dayabbr(evt.evt_day), "**: *", evt.evt_label, "*")
     end
 end
 
@@ -138,6 +138,7 @@ function mdcalendar(sched::CourseSchedule; header = false)
         @info("Topic idx $(topicidx) ")
         if topicidx <= length(caldata)
             while startswith(caldata[topicidx], "#")
+                push!(mdlines, "")
                 push!(mdlines, caldata[topicidx])
                 push!(mdlines, "")
                 topicidx = topicidx + 1
@@ -153,7 +154,7 @@ function mdcalendar(sched::CourseSchedule; header = false)
                 needheading = false
             end
             if length(caldata[topicidx:end]) >= length(wk)
-                wklbl = map(d -> string("*", monthabbr(d), ". ", day(d), "*"), wk)
+                wklbl = map(d -> string("*", monthabbr(d), " ", day(d), "*"), wk)
                 cells = [join(wklbl, ", ")]
                 
                 for i in eachindex(wk)
