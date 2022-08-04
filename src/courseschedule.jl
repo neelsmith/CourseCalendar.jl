@@ -69,7 +69,7 @@ end
 """Segment list of class meeting dates into week-long series, based on
 how often the class meets weekly.
 """
-function weeks(day1,lastday, meetson)
+function weeks(day1, lastday, meetson)
     startfrom = Dates.dayofweek(day1) == Dates.Wed || Dates.dayofweek(day1) == Dates.Thu ?     day1 - Dates.Day(2) : day1
     dr =  startfrom:Day(1):lastday
     groups = if meetson == MWF
@@ -128,6 +128,11 @@ function mdcalendar(sched::CourseSchedule; header = false)
     topicidx = 1
     needheading = true
     for wk in weeks(sched)
+        wkrange = 
+        wklynotes = []
+
+
+
         @info("Topic idx $(topicidx) ")
         if topicidx <= length(caldata)
             while startswith(caldata[topicidx], "#")
@@ -137,17 +142,23 @@ function mdcalendar(sched::CourseSchedule; header = false)
                 needheading = true
             end
             if needheading
-
-                lbls = map(d -> dayname(d), wk)
+                lbls = append!(["Dates"], map(d -> dayname(d), wk))
                 push!(mdlines, string("| ", join(lbls, " | "), " |"))
-                hdrformat = map(d -> ":---",  wk)
+                hdrformat = append!(["---:"], map(d -> ":---",  wk))
                 push!(mdlines, string("| ", join(hdrformat, " | "), " |"))
                 needheading = false
             end
             if length(caldata[topicidx:end]) >= length(wk)
-                cells = []
+                
+                wklbl = map(d -> string(monthabbr(d), ". ", day(d)), wk)
+                cells = [join(wklbl, ", ")]
+                
                 for i in 1:length(wk)
-                    push!(cells, caldata[topicidx])
+                    textcontent = split(caldata[topicidx], "#")
+                    if length(textcontent > 1)
+                        push!(wklynotes, textcontent[2])
+                    end
+                    push!(cells, textcontent[1])
                     topicidx = topicidx + 1
                 end
                 push!(mdlines, string("| ", join(cells," | "), " |"))

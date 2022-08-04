@@ -6,7 +6,7 @@ using TOML
 export CourseSchedule, courseSchedule
 export mdcalendar
 
-
+include("calendrical.jl")
 include("courseschedule.jl")
 include("events.jl")
 include("topics.jl")
