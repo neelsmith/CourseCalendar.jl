@@ -32,8 +32,6 @@ function checkdata(startdate, enddate, meets, topics)
     end
 end
 
-
-
 """Construct a `CourseSchedule` from a configuration file.
 """
 function courseSchedule(configfile, topicsfile)
@@ -56,15 +54,12 @@ function courseSchedule(configfile, topicsfile)
     )    
 end
 
-
-
 """Compute vector of weeks, where each week is vector of dates when
 classes are scheduled.
 """
 function weeks(sched::CourseSchedule)
     weeks(sched.firstday, sched.lastday, sched.meetson)
 end
-
 
 """Segment list of class meeting dates into week-long series, based on
 how often the class meets weekly.
@@ -89,12 +84,10 @@ function weeks(day1, lastday, meetson)
     end
 end
 
-
 """Compute number of class meetings."""
 function classcount(sched::CourseSchedule)
     classcount(sched.firstday, sched.lastday, sched.meetson)
 end
-
 
 """Compute number of class meetings between an inclusive starting and
 ending date, based on weekly class meeting pattern.
@@ -111,6 +104,19 @@ function classcount(day1, lastday, meetson)
 end
 
 
+"""Format a markdown string for all fixed-date events
+falling within the Sunday-Saturday range encompassing `wk`.
+"""
+function notesforweek(wk,sch::CourseSchedule)
+    wkrange = weekrange(wk[1])
+    matchingevts = filter(sch.fixeddates) do evt
+        evt.evt_day in wkrange
+    end
+    map(matchingevts) do evt
+        string("**", dayabbr(evt.evt_day), ".**: *", evt.evt_label, "*")
+    end
+end
+
 """Compose a markdown page with course calendar.
 """
 function mdcalendar(sched::CourseSchedule; header = false)
@@ -119,19 +125,15 @@ function mdcalendar(sched::CourseSchedule; header = false)
     end
     totalclasses = classcount(sched)
     if length(topicentries) > totalclasses
-        throw(DomainError("More topics ($(length(topicentries))) than dates ($(totalclasses))"))
+        throw(DomainError("More topics ($(length(topicentries))) than dates in term ($(totalclasses))"))
     end
-
 
     caldata = filter(ln -> ! isempty(ln), sched.topics)
     mdlines = header ? ["# Calendar for $(sched.title)", ""] : []
     topicidx = 1
     needheading = true
     for wk in weeks(sched)
-        wkrange = 
-        wklynotes = []
-
-
+        wklynotes = notesforweek(wk, sched)
 
         @info("Topic idx $(topicidx) ")
         if topicidx <= length(caldata)
@@ -143,24 +145,29 @@ function mdcalendar(sched::CourseSchedule; header = false)
             end
             if needheading
                 lbls = append!(["Dates"], map(d -> dayname(d), wk))
+                push!(lbls, "Notes")
                 push!(mdlines, string("| ", join(lbls, " | "), " |"))
                 hdrformat = append!(["---:"], map(d -> ":---",  wk))
+                push!(hdrformat, ":---")
                 push!(mdlines, string("| ", join(hdrformat, " | "), " |"))
                 needheading = false
             end
             if length(caldata[topicidx:end]) >= length(wk)
-                
-                wklbl = map(d -> string(monthabbr(d), ". ", day(d)), wk)
+                wklbl = map(d -> string("*", monthabbr(d), ". ", day(d), "*"), wk)
                 cells = [join(wklbl, ", ")]
                 
-                for i in 1:length(wk)
+                for i in eachindex(wk)
                     textcontent = split(caldata[topicidx], "#")
-                    if length(textcontent > 1)
-                        push!(wklynotes, textcontent[2])
+
+                    if length(textcontent) > 1
+                        dname = dayabbr(wk[i])
+                        push!(wklynotes, string("**", dname, "**. *", textcontent[2], "*"))
                     end
+                    
                     push!(cells, textcontent[1])
                     topicidx = topicidx + 1
                 end
+                push!(cells, join(wklynotes, " "))
                 push!(mdlines, string("| ", join(cells," | "), " |"))
             end
         end
