@@ -1,0 +1,28 @@
+# Configure a course calendar
+# Used for title of web page
+courseTitle = "Change through time, section X, S23"
+# YYYY-MM-DD
+firstDay = "2023-02-24"
+lastDay = "2022-12-17"
+
+# Pattern of class meetings: "mwf", "tt" or "wf"
+schedule = "tt"
+
+totalWeeks = 2
+
+fixedDates = [
+  
+  ["2023-03-03",  "Last class before spring break."],
+  ["2022-10-17",  "Classes resume."],
+  ["2022-11-22",  "Last class before Thanksgiving break."],
+  ["2022-11-28",  "Classes resume."],
+  ["2022-12-09",  "Last day of classes."],
+  ["2022-12-10",  "Study period begins."],
+  ["2022-12-13",  "Final examinations begin."],
+
+
+]
+
+
+
+
