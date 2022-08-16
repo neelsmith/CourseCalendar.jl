@@ -95,7 +95,7 @@ ending date, based on weekly class meeting pattern.
 function classcount(day1, lastday, meetson)
     if meetson == MWF
         3 * length(weeks(day1, lastday, meetson))
-    elseif sched.meetson == TTh
+    elseif meetson == TTh
         2 * length(weeks(day1, lastday, meetson))
     else
         @warn("CourseSchedule not implemented for $(sched.meetson)")

@@ -2,23 +2,38 @@
 # Used for title of web page
 courseTitle = "Change through time, section X, S23"
 # YYYY-MM-DD
-firstDay = "2023-02-24"
-lastDay = "2022-12-17"
+firstDay = "2023-01-24"
+lastDay = "2023-05-015"
 
 # Pattern of class meetings: "mwf", "tt" or "wf"
-schedule = "tt"
+schedule = "tth"
 
-totalWeeks = 2
+totalWeeks = 15
 
 fixedDates = [
   
+  ["2023-01-24","No lab this week"],
   ["2023-03-03",  "Last class before spring break."],
-  ["2022-10-17",  "Classes resume."],
-  ["2022-11-22",  "Last class before Thanksgiving break."],
-  ["2022-11-28",  "Classes resume."],
-  ["2022-12-09",  "Last day of classes."],
-  ["2022-12-10",  "Study period begins."],
-  ["2022-12-13",  "Final examinations begin."],
+  ["2023-03-13",  "Classes resume."],
+  ["2023-04-05",  "Last class before Easter break."],
+  ["2023-04-11",  "Classes resume."],
+  ["2023-04-26",  "Academic Conference."],
+
+  ["2023-05-08",  "Last day of classes."],
+  ["2023-05-09",  "Study period begins."],
+  ["2023-05-11",  "Final examinations begin."],
+
+
+  ["2023-05-10",  "Final revisions of all assignments due."],
+
+  ["2023-02-01", "**💡 Lab idea**: nouns and verbs of the Julia language"],
+
+  ["2023-02-08", "**💡 Lab idea**: Lincoln and Everett at Gettysburg (literary style)"],
+  ["2023-02-15", "**💡 Lab idea**: an n-gram viewer to compare texts"],
+  ["2023-02-22", "**💡 Lab idea**: revise (and optionally extend) work on labs 1 and 2 for submission"],
+
+    ["2023-03-16", "⚠️ Last day to submit revisions to labs 1-2"]
+
 
 
 ]

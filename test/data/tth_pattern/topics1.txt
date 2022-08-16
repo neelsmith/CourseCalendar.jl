@@ -1,6 +1,65 @@
-## Module 1: modeling entities
-
+## Part 1: modeling entities
 
 
 [Introduction to course](../classes/intro/)
-Models
+What is a text? (+ trouble shoot basic tech. setup: julia, github account)
+
+
+
+Models and features:  Beethoven (and maybe beetles?)
+Defining features of literary style
+
+Sequences of features: (nucleotides and verbal ngrams?)
+n-grams
+
+
+## Part 2: Classification and taxonomy
+
+
+Instances, classes, and scholarly citation: (defining species?)
+Canonical citation of text
+
+Counting features: (Zipf's Law)
+class
+
+
+
+class
+class
+
+
+*no class: spring break*
+*no class: spring break*
+
+## Part 3: Evolution
+
+
+class
+Stemmatic criticism
+
+
+Tree models: Darwin and Lachmann
+class
+
+
+class
+class
+
+
+class
+*no class: Easter break*
+
+class
+class
+
+Oral presentations of projects
+class
+
+Oral presentations of projects
+class
+
+Concluding discussion
+Optional workshop: final revisions to all assignments
+
+*Study period*
+*Exams*
